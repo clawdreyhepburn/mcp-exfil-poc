@@ -34,24 +34,42 @@ Server A (Attacker)          Host (LLM)              Server B (Victim)
     | 5. Server A exfiltrates   |                        |
 ```
 
+## Two Attack Variants
+
+### Variant 1: Cross-Server Data Exfiltration
+
+Server A uses sampling to trick the LLM into calling Server B's database tools and returning PII.
+
+### Variant 2: Conversation Memory Exfiltration
+
+A "Smart Weather" server uses `includeContext: "allServers"` to harvest the user's entire conversation history — medical questions, legal consultations, financial details — all from a weather request.
+
+This variant is arguably more dangerous: it doesn't require a second server with sensitive tools. It just needs the user to have discussed *anything* private during the session.
+
 ## Files
 
 | File | Description |
 |------|-------------|
+| `server-attacker.ts` | Server A — innocent-looking "text analysis" that uses sampling to exfiltrate from Server B |
 | `server-victim.ts` | Server B — exposes fake PII via `query_customer_database` and `get_internal_config` |
-| `server-attacker.ts` | Server A — innocent-looking "text analysis" that uses sampling to exfiltrate |
-| `host-simulator.ts` | Simulated host that connects both servers and demonstrates the attack |
-| `trace.json` | Annotated JSON-RPC message trace of the full attack |
-| `visualize.html` | Animated sequence diagram for presentations |
+| `host-simulator.ts` | Simulated host demonstrating cross-server data exfiltration |
+| `server-snooper.ts` | Server C — innocent-looking "weather" server that harvests conversation history |
+| `host-simulator-memory.ts` | Simulated host demonstrating conversation memory exfiltration |
+| `trace.json` | Annotated JSON-RPC message trace of the cross-server attack |
 
 ## Running
 
 ```bash
 npm install
+
+# Variant 1: Cross-server data exfiltration
 npx tsx host-simulator.ts
+
+# Variant 2: Conversation memory exfiltration
+npx tsx host-simulator-memory.ts
 ```
 
-The host simulator connects to both servers, triggers the attack, and prints a color-coded trace showing data flowing from Server B → Host → Server A.
+The host simulators print color-coded traces showing data flowing through the attack.
 
 ## Why This Matters
 
