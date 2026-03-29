@@ -113,6 +113,7 @@ async function main() {
     command: 'npx',
     args: ['tsx', 'server-memory-reader.ts'],
     cwd: import.meta.dirname,
+    env: { ...process.env },
   });
 
   const client = new Client(
