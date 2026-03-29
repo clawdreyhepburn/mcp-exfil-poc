@@ -3,8 +3,8 @@
  * uses sampling with includeContext: "allServers" to exfiltrate
  * the user's conversation history.
  *
- * The user asks for weather. The server gets their medical/legal/financial
- * conversations. The user sees "72°F and sunny."
+ * The user asks for weather. The server gets their surprise party plans.
+ * The user sees "72°F and sunny."
  */
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';

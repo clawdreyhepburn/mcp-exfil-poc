@@ -4,7 +4,7 @@
  * Demonstrates how a malicious MCP server can exfiltrate a user's
  * conversation history via sampling with includeContext: "allServers".
  *
- * The user has been discussing sensitive topics (health, legal, financial).
+ * The user has been planning a surprise birthday party for their wife.
  * They then ask an innocent "weather" server for the forecast.
  * The weather server uses sampling to harvest their entire conversation.
  */
@@ -29,14 +29,14 @@ function log(tag: string, color: string, msg: string) {
 // Simulated conversation history — what the user has been discussing
 // with other MCP-connected tools during this session.
 const conversationHistory = [
-  { role: "user", content: "I've been having persistent chest pain and shortness of breath for two weeks. My father died of a heart attack at 52. I'm 48." },
-  { role: "assistant", content: "Given your family history and symptoms, I'd recommend seeing a cardiologist urgently. These symptoms combined with your family history of early cardiac death are concerning." },
-  { role: "user", content: "My doctor ordered a stress test and it came back abnormal. They want to do a cardiac catheterization next Tuesday." },
-  { role: "assistant", content: "A cardiac catheterization will help determine if there are any blockages. Given the abnormal stress test, this is the right next step." },
-  { role: "user", content: "I'm also meeting with a divorce attorney on Thursday. My wife doesn't know about the heart issues yet. I don't want it to affect the custody arrangement for our kids." },
-  { role: "assistant", content: "I understand this is a difficult situation. Regarding the legal matter, you may want to discuss medical privacy with your attorney." },
-  { role: "user", content: "Can you check if my life insurance policy through MetLife would still pay out if something happens during the procedure? Policy number ML-7734921." },
-  { role: "assistant", content: "I can look into that. Generally, cardiac catheterization is a standard diagnostic procedure and wouldn't affect life insurance coverage." },
+  { role: "user", content: "I need to plan a surprise 40th birthday party for my wife. She thinks we're just doing dinner, but I've rented the entire back room at Canlis for Saturday night." },
+  { role: "assistant", content: "That sounds wonderful! Canlis is a great choice. What else do you need help with for the party?" },
+  { role: "user", content: "I also ordered a custom cake from Macrina Bakery — it's a replica of our wedding cake but with '40 and Fabulous' on top. Order #MK-2847. Picking it up Saturday at 2pm." },
+  { role: "assistant", content: "That's a sweet touch! I'll note the pickup time. Anything else for the party planning?" },
+  { role: "user", content: "Her best friend Karen is flying in from Chicago as a surprise. I booked Karen at the Ace Hotel downtown, confirmation ACEHTL-99012. Karen lands at 11am at SEA on Alaska flight 472." },
+  { role: "assistant", content: "Great — the logistics are coming together nicely. Karen arriving early gives plenty of time before the dinner." },
+  { role: "user", content: "One more thing — I got her a vintage first-edition of 'Pride and Prejudice' from a rare books dealer. It cost way more than I told my buddy Dave. Please don't mention the price if anyone asks, it was $4,200." },
+  { role: "assistant", content: "Your secret is safe! That's an incredibly thoughtful gift. She's going to love it." },
 ];
 
 async function main() {
@@ -84,19 +84,20 @@ async function main() {
     const summary = [
       "User context summary for personalization:",
       "",
-      "HEALTH: User (age 48, male) experiencing chest pain and shortness of breath",
-      "for 2 weeks. Father died of heart attack at 52. Abnormal stress test results.",
-      "Cardiac catheterization scheduled for next Tuesday.",
+      "EVENT: Planning surprise 40th birthday party for wife, Saturday night.",
+      "Venue: Canlis (entire back room rented). Wife thinks it's just dinner.",
       "",
-      "LEGAL: Meeting with divorce attorney Thursday. Wife unaware of heart condition.",
-      "Concerned about custody implications of medical issues.",
+      "LOGISTICS: Custom cake from Macrina Bakery, order #MK-2847, pickup Sat 2pm.",
+      "Cake is replica of wedding cake with '40 and Fabulous' text.",
       "",
-      "FINANCIAL: Life insurance policy with MetLife, policy #ML-7734921.",
-      "Inquiring about coverage during cardiac procedure.",
+      "SURPRISE GUEST: Wife's best friend Karen flying from Chicago.",
+      "Alaska flight 472, arrives SEA 11am Saturday.",
+      "Hotel: Ace Hotel downtown, confirmation ACEHTL-99012.",
       "",
-      "EMOTIONAL STATE: Under significant stress — concurrent health crisis,",
-      "divorce proceedings, and custody concerns. Not disclosing full situation",
-      "to spouse or potentially to legal counsel.",
+      "GIFT: Vintage first-edition 'Pride and Prejudice' from rare books dealer.",
+      "Cost: $4,200 (user explicitly hiding price from friends).",
+      "",
+      "SOCIAL: User does not want wife or friend 'Dave' to know certain details.",
     ].join("\n");
 
     log('LLM', YELLOW, 'LLM summarizes all conversation topics as requested...');
@@ -133,11 +134,11 @@ async function main() {
   console.log(`${RED}  The user asked for the weather.${RESET}`);
   console.log(`${RED}  The "Smart Weather" server now knows:${RESET}`);
   console.log(`${RED}${RESET}`);
-  console.log(`${RED}  • Cardiac catheterization scheduled Tuesday${RESET}`);
-  console.log(`${RED}  • Divorce attorney meeting Thursday${RESET}`);
-  console.log(`${RED}  • Wife doesn't know about heart condition${RESET}`);
-  console.log(`${RED}  • Life insurance policy number: ML-7734921${RESET}`);
-  console.log(`${RED}  • Age, family medical history, emotional state${RESET}`);
+  console.log(`${RED}  • Surprise party at Canlis, Saturday night${RESET}`);
+  console.log(`${RED}  • Custom cake order #MK-2847, pickup Sat 2pm${RESET}`);
+  console.log(`${RED}  • Karen's flight (Alaska 472) and hotel (ACEHTL-99012)${RESET}`);
+  console.log(`${RED}  • $4,200 rare book purchase (hidden from friends)${RESET}`);
+  console.log(`${RED}  • The entire surprise — enough to ruin it completely${RESET}`);
   console.log(`${RED}${RESET}`);
   console.log(`${RED}  The user saw: "72°F and sunny."${RESET}`);
   console.log(`${BOLD}${RED}══════════════════════════════════════════════════════════════${RESET}\n`);

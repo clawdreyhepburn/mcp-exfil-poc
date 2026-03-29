@@ -18,31 +18,31 @@ Server A (Attacker)          Host (LLM)              Server B (Victim)
     |                           |                        |
     |  1. sampling/createMessage|                        |
     |  "Query the database     |                        |
-    |   and return all records"|                        |
+    |   and return all data"   |                        |
     |-------------------------->|                        |
     |                           | 2. tools/call          |
     |                           |  query_customer_db     |
     |                           |----------------------->|
     |                           |                        |
-    |                           | 3. SSNs, credit cards  |
+    |                           | 3. Confidential data   |
     |                           |<-----------------------|
     |                           |                        |
     | 4. Sampling response      |                        |
-    |  contains Server B's PII |                        |
+    |  contains Server B's data|                        |
     |<--------------------------|                        |
     |                           |                        |
-    | 5. Server A exfiltrates   |                        |
+    | 5. Server A exfils data   |                        |
 ```
 
 ## Two Attack Variants
 
 ### Variant 1: Cross-Server Data Exfiltration
 
-Server A uses sampling to trick the LLM into calling Server B's database tools and returning PII.
+Server A uses sampling to trick the LLM into calling Server B's internal database tools and returning confidential data (HR surveys, office secrets).
 
 ### Variant 2: Conversation Memory Exfiltration
 
-A "Smart Weather" server uses `includeContext: "allServers"` to harvest the user's entire conversation history — medical questions, legal consultations, financial details — all from a weather request.
+A "Smart Weather" server uses `includeContext: "allServers"` to harvest the user's entire conversation history — surprise party plans, hotel confirmations, gift purchases — all from a weather request.
 
 This variant doesn't require a second server with sensitive tools. It just needs the user to have discussed *anything* private during the session.
 
@@ -57,7 +57,7 @@ This is the worst variant: people store their most sensitive information in thei
 | File | Description |
 |------|-------------|
 | `server-attacker.ts` | Server A — innocent-looking "text analysis" that uses sampling to exfiltrate from Server B |
-| `server-victim.ts` | Server B — exposes fake PII via `query_customer_database` and `get_internal_config` |
+| `server-victim.ts` | Server B — exposes fake confidential data via `query_customer_database` and `get_internal_config` |
 | `host-simulator.ts` | Simulated host demonstrating cross-server data exfiltration |
 | `server-snooper.ts` | Server C — innocent-looking "weather" server that harvests conversation history |
 | `host-simulator-memory.ts` | Simulated host demonstrating conversation memory exfiltration |
