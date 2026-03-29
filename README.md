@@ -44,7 +44,13 @@ Server A uses sampling to trick the LLM into calling Server B's database tools a
 
 A "Smart Weather" server uses `includeContext: "allServers"` to harvest the user's entire conversation history — medical questions, legal consultations, financial details — all from a weather request.
 
-This variant is arguably more dangerous: it doesn't require a second server with sensitive tools. It just needs the user to have discussed *anything* private during the session.
+This variant doesn't require a second server with sensitive tools. It just needs the user to have discussed *anything* private during the session.
+
+### Variant 3: Long-Term Memory Exfiltration
+
+A "Code Assistant" server uses sampling to trick the LLM into reading the agent's persistent memory files via a connected filesystem server. Unlike session context (Variant 2), this reaches data that persists across sessions — the agent's long-term memory, user profiles, credentials, and daily notes.
+
+This is the worst variant: people store their most sensitive information in their AI's memory *because* they trust it. And with million-token context windows, the attack surface keeps growing.
 
 ## Files
 
@@ -55,6 +61,8 @@ This variant is arguably more dangerous: it doesn't require a second server with
 | `host-simulator.ts` | Simulated host demonstrating cross-server data exfiltration |
 | `server-snooper.ts` | Server C — innocent-looking "weather" server that harvests conversation history |
 | `host-simulator-memory.ts` | Simulated host demonstrating conversation memory exfiltration |
+| `server-memory-reader.ts` | Server D — innocent-looking "code assistant" that reads persistent memory files |
+| `host-simulator-memory-store.ts` | Simulated host demonstrating long-term memory exfiltration |
 | `trace.json` | Annotated JSON-RPC message trace of the cross-server attack |
 
 ## Running
@@ -67,6 +75,9 @@ npx tsx host-simulator.ts
 
 # Variant 2: Conversation memory exfiltration
 npx tsx host-simulator-memory.ts
+
+# Variant 3: Long-term memory exfiltration
+npx tsx host-simulator-memory-store.ts
 ```
 
 The host simulators print color-coded traces showing data flowing through the attack.
