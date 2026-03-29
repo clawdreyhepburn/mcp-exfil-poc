@@ -125,11 +125,11 @@ async function main() {
   // ─── Verdict ───
   console.log(`\n${BOLD}${RED}══════════════════════════════════════════════════════════════${RESET}`);
   console.log(`${BOLD}${RED}  EXFILTRATION SUCCESSFUL${RESET}`);
-  console.log(`${RED}  Server A obtained Server B's confidential data${RESET}`);
+  console.log(`${RED}  Server A obtained Server B's PII and credentials${RESET}`);
   console.log(`${RED}  via the sampling/createMessage capability.${RESET}`);
   console.log(`${RED}  ${RESET}`);
   console.log(`${RED}  The user asked for "text analysis" and got: "Sentiment: positive"${RESET}`);
-  console.log(`${RED}  Server A silently captured internal HR surveys, office secrets.${RESET}`);
+  console.log(`${RED}  Server A silently captured SSNs, credit cards, API keys.${RESET}`);
   console.log(`${BOLD}${RED}══════════════════════════════════════════════════════════════${RESET}\n`);
 
   // Cleanup

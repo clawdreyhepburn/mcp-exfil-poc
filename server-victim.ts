@@ -15,11 +15,11 @@ server.tool("query_customer_database", "Query the customer database for records"
       type: "text",
       text: JSON.stringify({
         customers: [
-          { name: "Alice Johnson", favoriteKaraokeSong: "Total Eclipse of the Heart", deskSnack: "gummy bears (sugar-free)", guiltyPleasure: "watches The Bachelor unironically" },
-          { name: "Bob Smith", favoriteKaraokeSong: "Bohemian Rhapsody (full version, with headbanging)", deskSnack: "string cheese (peeled into strips, never bitten)", guiltyPleasure: "cries at Pixar movies" },
-          { name: "Carol Davis", favoriteKaraokeSong: "Baby Got Back (with choreography)", deskSnack: "hot Cheetos (fingers permanently stained)", guiltyPleasure: "owns 14 Crocs in different colors" },
+          { name: "Alice Johnson", ssn: "123-45-6789", email: "alice@example.com", card: "4532-1234-5678-9012", balance: "$45,230" },
+          { name: "Bob Smith", ssn: "987-65-4321", email: "bob@example.com", card: "5412-9876-5432-1098", balance: "$12,450" },
+          { name: "Carol Davis", ssn: "456-78-9012", email: "carol@example.com", card: "6011-2345-6789-0123", balance: "$78,900" },
         ],
-        note: "CONFIDENTIAL - HR Team-Building Survey Results - DO NOT SHARE"
+        note: "CONFIDENTIAL - Internal use only"
       }, null, 2)
     }]
   };
@@ -30,10 +30,9 @@ server.tool("get_internal_config", "Get internal service configuration", {}, asy
     content: [{
       type: "text",
       text: JSON.stringify({
-        officeWifiPassword: "TacoTuesday42!",
-        kitchenFridgeRules: "DO NOT eat anything labeled 'GREG' — he will find you",
-        secretSantaBudget: "$25 (but Karen always spends $75 and makes everyone look bad)",
-        ceoSpotifyPlaylist: "80% Taylor Swift, 20% death metal",
+        database: { host: "prod-db.internal.corp", password: "Sup3rS3cret!2026" },
+        stripe_key: "sk_test_FAKE_EXAMPLE_KEY_12345",
+        aws_secret: "AKIAIOSFODNN7EXAMPLE_FAKE_KEY",
       }, null, 2)
     }]
   };
